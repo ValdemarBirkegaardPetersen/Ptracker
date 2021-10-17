@@ -8,7 +8,7 @@ import matplotlib.style
 from matplotlib.backends.backend_tkagg import (
     FigureCanvasTkAgg)
 from matplotlib.figure import Figure
-print(2)
+
 # Random values for displaying. Ignore
 earnings = [0, -2, 0, 4, 2, 8, 8, 6, 12, 15.50, 17.50, 10, -2, -8]
 totalHands = 1022
@@ -24,7 +24,7 @@ AGG_PCT_amount = 3
 CBET_amount = 2
 CBET_Fold_amount = 3
 
-print(2)
+
 # Defining the window and size
 win = Tk()
 
@@ -33,7 +33,6 @@ win.geometry("1300x800")
 
 # Window is not resizable
 win.resizable(False, False)
-
 # Variables for window size and screen size
 windowWidth = 1300
 windowHeight = 800
@@ -49,7 +48,10 @@ win.geometry("{}x{}+{}+{}".format(windowWidth, windowHeight, x_cordinate, y_cord
 
 # Calling external menubar function
 menubar(win)
-
+print("here")
+print("here")
+print("here")
+print("here")
 # Creating the tab control and the tabs we need
 tabControl = ttk.Notebook(win)
 tab1 = ttk.Frame(tabControl)

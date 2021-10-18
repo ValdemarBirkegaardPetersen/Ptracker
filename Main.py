@@ -9,6 +9,8 @@ from matplotlib.backends.backend_tkagg import (
     FigureCanvasTkAgg)
 from matplotlib.figure import Figure
 
+# Removed setup.py
+
 # Random values for displaying. Ignore
 earnings = [0, -2, 0, 4, 2, 8, 8, 6, 12, 15.50, 17.50, 10, -2, -8]
 totalHands = 1022

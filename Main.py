@@ -9,8 +9,6 @@ from matplotlib.backends.backend_tkagg import (
     FigureCanvasTkAgg)
 from matplotlib.figure import Figure
 
-# Removed setup.py
-
 # Random values for displaying. Ignore
 earnings = [0, -2, 0, 4, 2, 8, 8, 6, 12, 15.50, 17.50, 10, -2, -8]
 totalHands = 1022
@@ -212,7 +210,9 @@ CBET_Fold_Canvas.create_text(40, 42, fill="#000000", font=("MoolBoran", 10, "bol
 CBET_Fold_Canvas.place(relx=.857, rely=.86)
 # ----------------------------------------CBET FOLD------------------------------------------------------------
 
-
+# ----------------------------------------Hands Won------------------------------------------------------------
+# Maybe implement this later
+# ----------------------------------------Hands Won------------------------------------------------------------
 
 
 # PLACE STUFF HERE THAT YOU WANT TO STAY IN FRONT
@@ -227,17 +227,24 @@ separator1.place(relx=0, rely=0.798, relwidth=1, relheight=0)
 
 # Tree view - MTT
 tournamentTree = ttk.Treeview(win, show="headings",height=8)
-tournamentTree['columns']=("Rank", "Name", "Badge")
+tournamentTree['columns']=("Header1", "Header2", "Header3", "Header4","Header5","Header6","Header7")
 tournamentTree.column("#0", width=0, stretch=NO)
-tournamentTree.column("Rank", anchor=CENTER, width=222)
-tournamentTree.column("Name", anchor=CENTER, width=222)
-tournamentTree.column("Badge", anchor=CENTER, width=222)
-
+tournamentTree.column("Header1", anchor=CENTER, width=140)
+tournamentTree.column("Header2", anchor=CENTER, width=100)
+tournamentTree.column("Header3", anchor=CENTER, width=100)
+tournamentTree.column("Header4", anchor=CENTER, width=140)
+tournamentTree.column("Header5", anchor=CENTER, width=200)
+tournamentTree.column("Header6", anchor=CENTER, width=100)
+tournamentTree.column("Header7", anchor=CENTER, width=100)
 # Headings
 tournamentTree.heading("#0", text="", anchor=CENTER)
-tournamentTree.heading("Rank", text="Id", anchor=CENTER)
-tournamentTree.heading("Name", text="Rank", anchor=CENTER)
-tournamentTree.heading("Badge", text="Badge", anchor=CENTER)
+tournamentTree.heading("Header1", text="Tournament ID", anchor=CENTER)
+tournamentTree.heading("Header2", text="Buy-In", anchor=CENTER)
+tournamentTree.heading("Header3", text="Net Won")
+tournamentTree.heading("Header4", text="Game", anchor=CENTER)
+tournamentTree.heading("Header5", text="Tournament Description", anchor=CENTER)
+tournamentTree.heading("Header6", text="Players", anchor=CENTER)
+tournamentTree.heading("Header7", text="Finish", anchor=CENTER)
 
 # Insert MTT data here
 tournamentTree.insert(parent="", index=0, iid=0, text="", values=("1", "Vineet", "Alpha"))
@@ -253,9 +260,9 @@ tournamentTree.place(relx=.002,rely=.609)
 
 # Tree view - Cash Game
 tournamentTree = ttk.Treeview(win, show="headings",height=8)
-tournamentTree['columns']=("Rank", "Name", "Badge")
+tournamentTree['columns']=("Header1", "Name", "Badge")
 tournamentTree.column("#0", width=0, stretch=NO)
-tournamentTree.column("Rank", anchor=CENTER, width=222)
+tournamentTree.column("Header1", anchor=CENTER, width=222)
 tournamentTree.column("Name", anchor=CENTER, width=222)
 tournamentTree.column("Badge", anchor=CENTER, width=222)
 

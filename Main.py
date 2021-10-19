@@ -24,6 +24,7 @@ AGG_PCT_amount = 3
 CBET_amount = 2
 CBET_Fold_amount = 3
 
+print("here")
 
 # Defining the window and size
 win = Tk()
@@ -48,10 +49,7 @@ win.geometry("{}x{}+{}+{}".format(windowWidth, windowHeight, x_cordinate, y_cord
 
 # Calling external menubar function
 menubar(win)
-print("here")
-print("here")
-print("here")
-print("here")
+
 # Creating the tab control and the tabs we need
 tabControl = ttk.Notebook(win)
 tab1 = ttk.Frame(tabControl)
@@ -227,24 +225,29 @@ separator1.place(relx=0, rely=0.798, relwidth=1, relheight=0)
 
 # Tree view - MTT
 tournamentTree = ttk.Treeview(win, show="headings",height=8)
-tournamentTree['columns']=("Header1", "Header2", "Header3", "Header4","Header5","Header6","Header7")
+tournamentTree['columns']=("Header1", "Header2", "Header3", "Header4","Header5","Header6","Header7", "Header8", "Header9")
 tournamentTree.column("#0", width=0, stretch=NO)
 tournamentTree.column("Header1", anchor=CENTER, width=140)
-tournamentTree.column("Header2", anchor=CENTER, width=100)
+tournamentTree.column("Header2", anchor=CENTER, width=195)
 tournamentTree.column("Header3", anchor=CENTER, width=100)
-tournamentTree.column("Header4", anchor=CENTER, width=140)
-tournamentTree.column("Header5", anchor=CENTER, width=200)
+tournamentTree.column("Header4", anchor=CENTER, width=100)
+tournamentTree.column("Header5", anchor=CENTER, width=100)
 tournamentTree.column("Header6", anchor=CENTER, width=100)
 tournamentTree.column("Header7", anchor=CENTER, width=100)
+tournamentTree.column("Header8", anchor=CENTER, width=140)
+tournamentTree.column("Header9", anchor=CENTER, width=140)
+
 # Headings
 tournamentTree.heading("#0", text="", anchor=CENTER)
 tournamentTree.heading("Header1", text="Tournament ID", anchor=CENTER)
-tournamentTree.heading("Header2", text="Buy-In", anchor=CENTER)
-tournamentTree.heading("Header3", text="Net Won")
-tournamentTree.heading("Header4", text="Game", anchor=CENTER)
-tournamentTree.heading("Header5", text="Tournament Description", anchor=CENTER)
+tournamentTree.heading("Header2", text="Tournament Description", anchor=CENTER)
+tournamentTree.heading("Header3", text="Game")
+tournamentTree.heading("Header4", text="Buy-In", anchor=CENTER)
+tournamentTree.heading("Header5", text="Net Won", anchor=CENTER)
 tournamentTree.heading("Header6", text="Players", anchor=CENTER)
 tournamentTree.heading("Header7", text="Finish", anchor=CENTER)
+tournamentTree.heading("Header8", text="Placement", anchor=CENTER)
+tournamentTree.heading("Header9", text="Prize Pool", anchor=CENTER)
 
 # Insert MTT data here
 tournamentTree.insert(parent="", index=0, iid=0, text="", values=("1", "Vineet", "Alpha"))

@@ -32,6 +32,10 @@ win = Tk()
 win.title("Poker Tracker")
 win.geometry("1300x800")
 
+# Overall theme
+s = ttk.Style()
+s.theme_use("clam")
+
 # Window is not resizable
 win.resizable(False, False)
 # Variables for window size and screen size
@@ -71,7 +75,7 @@ styleFrame1.configure('My.TFrame', background='#212946')
 
 # Creating the frames and defining their width and height in regards to each other
 frame1 = ttk.Frame(panedwindow, width=700, height=460, relief=RIDGE)
-frame2 = ttk.Frame(panedwindow, width=541, height=460, relief=RIDGE)
+frame2 = ttk.Frame(panedwindow, width=545, height=460, relief=RIDGE)
 
 # Here the frames are added to the pane. The weight is like a ratio of their size in regards to eachother.
 panedwindow.add(frame1, weight=5)
@@ -224,55 +228,61 @@ separator1.place(relx=0, rely=0.798, relwidth=1, relheight=0)
 
 
 # Tree view - MTT
-tournamentTree = ttk.Treeview(win, show="headings",height=8)
-tournamentTree['columns']=("Header1", "Header2", "Header3", "Header4","Header5","Header6","Header7", "Header8", "Header9")
+tournamentTree = ttk.Treeview(win, show="headings",height=19) #Height should be equal number of MTT's
+tournamentTree['columns']=("Header1", "Header2", "Header3", "Header4","Header5","Header6","Header7", "Header8")
 tournamentTree.column("#0", width=0, stretch=NO)
-tournamentTree.column("Header1", anchor=CENTER, width=140)
-tournamentTree.column("Header2", anchor=CENTER, width=195)
-tournamentTree.column("Header3", anchor=CENTER, width=100)
-tournamentTree.column("Header4", anchor=CENTER, width=100)
-tournamentTree.column("Header5", anchor=CENTER, width=100)
-tournamentTree.column("Header6", anchor=CENTER, width=100)
-tournamentTree.column("Header7", anchor=CENTER, width=100)
-tournamentTree.column("Header8", anchor=CENTER, width=140)
-tournamentTree.column("Header9", anchor=CENTER, width=140)
+
+# Place tree
+tournamentTree.place(relx=.002,rely=.609)
+
+# Columns
+tournamentTree.column("Header1", anchor=CENTER, width=161)
+tournamentTree.column("Header2", anchor=CENTER, width=161)
+tournamentTree.column("Header3", anchor=CENTER, width=161)
+tournamentTree.column("Header4", anchor=CENTER, width=161)
+tournamentTree.column("Header5", anchor=CENTER, width=161)
+tournamentTree.column("Header6", anchor=CENTER, width=161)
+tournamentTree.column("Header7", anchor=CENTER, width=162)
+tournamentTree.column("Header8", anchor=CENTER, width=162)
+
 
 # Headings
 tournamentTree.heading("#0", text="", anchor=CENTER)
-tournamentTree.heading("Header1", text="Tournament ID", anchor=CENTER)
+tournamentTree.heading("Header1", text="Date", anchor=CENTER)
 tournamentTree.heading("Header2", text="Tournament Description", anchor=CENTER)
 tournamentTree.heading("Header3", text="Game")
 tournamentTree.heading("Header4", text="Buy-In", anchor=CENTER)
 tournamentTree.heading("Header5", text="Net Won", anchor=CENTER)
-tournamentTree.heading("Header6", text="Players", anchor=CENTER)
-tournamentTree.heading("Header7", text="Finish", anchor=CENTER)
+tournamentTree.heading("Header6", text="Prize Pool", anchor=CENTER)
+tournamentTree.heading("Header7", text="Players", anchor=CENTER)
 tournamentTree.heading("Header8", text="Placement", anchor=CENTER)
-tournamentTree.heading("Header9", text="Prize Pool", anchor=CENTER)
 
 # Insert MTT data here
-tournamentTree.insert(parent="", index=0, iid=0, text="", values=("1", "Vineet", "Alpha"))
-tournamentTree.insert(parent="", index=1, iid=1, text="", values=("2", "Anil", "Bravo"))
-tournamentTree.insert(parent='', index=2, iid=2, text='', values=('3','Vinod','Charlie'))
-tournamentTree.insert(parent='', index=3, iid=3, text='', values=('4','Vimal','Delta'))
-tournamentTree.insert(parent='', index=4, iid=4, text='', values=('5','Manjeet','Echo'))
+tournamentTree.insert(parent="", index=0, iid=0, text="", values=("2021/10/07", "Super Satellite MTT", "No Limit Hold'em", "$0.13/$0.01 USD", "$0.00", "$15.47 USD", "90 players", "50th place"))
+tournamentTree.insert(parent="", index=1, iid=1, text="", values=("2021/10/07", "Super Satellite MTT", "No Limit Hold'em", "$0.13/$0.01 USD", "$0.00", "$15.47 USD", "90 players", "50th place"))
+tournamentTree.insert(parent='', index=2, iid=2, text='', values=("2021/10/07","Super Satellite MTT","No Limit Hold'em", "$0.13/$0.01 USD", "$0.00", "$15.47 USD", "90 players", "50th place"))
+tournamentTree.insert(parent='', index=3, iid=3, text='', values=("2021/10/07","Super Satellite MTT","No Limit Hold'em", "$0.13/$0.01 USD", "$0.00", "$15.47 USD", "90 players", "50th place"))
+tournamentTree.insert(parent='', index=4, iid=4, text='', values=("2021/10/07","Super Satellite MTT","No Limit Hold'em", "$0.13/$0.01 USD", "$0.00", "$15.47 USD", "90 players", "50th place"))
+tournamentTree.insert(parent="", index=5, iid=5, text="", values=("2021/10/07", "Super Satellite MTT", "No Limit Hold'em", "$0.13/$0.01 USD", "$0.00", "$15.47 USD", "90 players", "50th place"))
+tournamentTree.insert(parent="", index=6, iid=6, text="", values=("2021/10/07", "Super Satellite MTT", "No Limit Hold'em", "$0.13/$0.01 USD", "$0.00", "$15.47 USD", "90 players", "50th place"))
+tournamentTree.insert(parent='', index=7, iid=7, text='', values=("2021/10/07","Super Satellite MTT","No Limit Hold'em", "$0.13/$0.01 USD", "$0.00", "$15.47 USD", "90 players", "50th place"))
+tournamentTree.insert(parent='', index=8, iid=8, text='', values=("2021/10/07","Super Satellite MTT","No Limit Hold'em", "$0.13/$0.01 USD", "$0.00", "$15.47 USD", "90 players", "50th place"))
+tournamentTree.insert(parent='', index=9, iid=9, text='', values=("2021/10/07","Super Satellite MTT","No Limit Hold'em", "$0.13/$0.01 USD", "$0.00", "$15.47 USD", "90 players", "50th place"))
+tournamentTree.insert(parent="", index=10, iid=10, text="", values=("2021/10/07", "Super Satellite MTT", "No Limit Hold'em", "$0.13/$0.01 USD", "$0.00", "$15.47 USD", "90 players", "50th place"))
+tournamentTree.insert(parent="", index=11, iid=11, text="", values=("2021/10/07", "Super Satellite MTT", "No Limit Hold'em", "$0.13/$0.01 USD", "$0.00", "$15.47 USD", "90 players", "50th place"))
+tournamentTree.insert(parent='', index=12, iid=12, text='', values=("2021/10/07","Super Satellite MTT","No Limit Hold'em", "$0.13/$0.01 USD", "$0.00", "$15.47 USD", "90 players", "50th place"))
+tournamentTree.insert(parent='', index=13, iid=13, text='', values=("2021/10/07","Super Satellite MTT","No Limit Hold'em", "$0.13/$0.01 USD", "$0.00", "$15.47 USD", "90 players", "50th place"))
+tournamentTree.insert(parent='', index=14, iid=14, text='', values=("2021/10/07","Super Satellite MTT","No Limit Hold'em", "$0.13/$0.01 USD", "$0.00", "$15.47 USD", "90 players", "50th place"))
+tournamentTree.insert(parent="", index=15, iid=15, text="", values=("2021/10/07", "Super Satellite MTT", "No Limit Hold'em", "$0.13/$0.01 USD", "$0.00", "$15.47 USD", "90 players", "50th place"))
+tournamentTree.insert(parent="", index=16, iid=16, text="", values=("2021/10/07", "Super Satellite MTT", "No Limit Hold'em", "$0.13/$0.01 USD", "$0.00", "$15.47 USD", "90 players", "50th place"))
+tournamentTree.insert(parent='', index=17, iid=17, text='', values=("2021/10/07","Super Satellite MTT","No Limit Hold'em", "$0.13/$0.01 USD", "$0.00", "$15.47 USD", "90 players", "50th place"))
+tournamentTree.insert(parent='', index=18, iid=18, text='', values=("2021/10/07","Super Satellite MTT","No Limit Hold'em", "$0.13/$0.01 USD", "$0.00", "$15.47 USD", "90 players", "50th place"))
+tournamentTree.insert(parent='', index=19, iid=19, text='', values=("2021/10/07","Super Satellite MTT","No Limit Hold'em", "$0.13/$0.01 USD", "$0.00", "$15.47 USD", "90 players", "50th place"))
 
-s = ttk.Style()
-tournamentTree["style"]
-s.theme_use("clam")
-tournamentTree.place(relx=.002,rely=.609)
-
-# Tree view - Cash Game
-tournamentTree = ttk.Treeview(win, show="headings",height=8)
-tournamentTree['columns']=("Header1", "Name", "Badge")
-tournamentTree.column("#0", width=0, stretch=NO)
-tournamentTree.column("Header1", anchor=CENTER, width=222)
-tournamentTree.column("Name", anchor=CENTER, width=222)
-tournamentTree.column("Badge", anchor=CENTER, width=222)
-
-
-#treeStyle = ttk.Style()
-#treeStyle.theme_use("default")
-#treeStyle.map("Treeview")
+# Scroll Bar
+treeScroll = ttk.Scrollbar(win, orient="vertical",command=tournamentTree.yview)
+tournamentTree.configure(yscroll=tournamentTree.set)
+#treeScroll.grid(row=0, column=1, sticky='ns')
 
 
 # Tkinter loop

@@ -1,13 +1,17 @@
 from tkinter import ttk
 from tkinter import *
 
-
 from CenterWindow import menubar
+from treeviewFunctions import insertCashgameData,insertTourneyData, hello
 
 import matplotlib.style
 from matplotlib.backends.backend_tkagg import (
     FigureCanvasTkAgg)
 from matplotlib.figure import Figure
+
+
+
+
 
 # Random values for displaying. Ignore
 earnings = [0, -2, 0, 4, 2, 8, 8, 6, 12, 15.50, 17.50, 10, -2, -8]
@@ -51,6 +55,22 @@ y_cordinate = int((screenHeight / 2) - (windowHeight / 2))
 # Centering the window with the variables above
 win.geometry("{}x{}+{}+{}".format(windowWidth, windowHeight, x_cordinate, y_cordinate))
 
+
+# Declaring and binding events to the selected tab
+tournamentTree = ttk.Treeview(win, show="headings",height=19) #Height should be equal number of MTT's
+
+def on_tab_selected(event):
+    selected_tab = event.widget.select()
+    tab_text = event.widget.tab(selected_tab, "text")
+
+    if tab_text == "Tournaments":
+        print("Tournaments")
+
+    if tab_text == "Cash Games":
+        for i in tournamentTree.get_children():
+            tournamentTree.delete(i)
+        print("Cash Games")
+
 # Calling external menubar function
 menubar(win)
 
@@ -59,9 +79,11 @@ tabControl = ttk.Notebook(win)
 tab1 = ttk.Frame(tabControl)
 tab2 = ttk.Frame(tabControl)
 
+tabControl.bind("<<NotebookTabChanged>>", on_tab_selected)
+
 # Adding and naming tab1 and tab2 and finally packing it, making it visible.
-tabControl.add(tab1, text="Reports")
-tabControl.add(tab2, text="Live Play")
+tabControl.add(tab1, text="Tournaments")
+tabControl.add(tab2, text="Cash Games")
 tabControl.pack(expand=1, fill="both")
 
 # Inserting different objects into the different tabs. "Label" can be changed to "Buttons" or "ProgressBar"
@@ -70,6 +92,7 @@ ttk.Label(tab2, text="Current Game:", font=("MoolBoran", 11, 'bold')).pack(side=
 # Splitting the window into diffrent sections and attaching to tab1.
 panedwindow = ttk.Panedwindow(tab1, orient=HORIZONTAL)
 panedwindow.pack()
+
 styleFrame1 = ttk.Style()
 styleFrame1.configure('My.TFrame', background='#212946')
 
@@ -114,6 +137,11 @@ statsCanvas = Canvas(frame1, width=700, height=100, bg="#dcdad5", highlightthick
 
 # Key stats section - Label first
 ttk.Label(frame1, text="Key Stats", font=("MoolBoran", 11, "bold")).place(relx=.43, rely=0.82,)
+
+
+
+
+
 
 
 # ----------------------------------------Total Hands-----------------------------------------------------------
@@ -217,7 +245,10 @@ CBET_Fold_Canvas.place(relx=.857, rely=.86)
 # ----------------------------------------Hands Won------------------------------------------------------------
 
 
-# PLACE STUFF HERE THAT YOU WANT TO STAY IN FRONT
+ttk.Label(frame2, text="PokerStars HandHistory Location:", font=("MoolBoran", 11, "bold")).place(relx=0.01,rely=0.01)
+
+
+
 
 # Total earnings label
 ttk.Label(frame1, text="Total Earnings ($)", font=("MoolBoran", 11, 'bold')).pack(side=TOP, pady=7)
@@ -227,13 +258,17 @@ separator1 = ttk.Separator(frame1, orient="horizontal")
 separator1.place(relx=0, rely=0.798, relwidth=1, relheight=0)
 
 
-# Tree view - MTT
-tournamentTree = ttk.Treeview(win, show="headings",height=19) #Height should be equal number of MTT's
+# Tree view - Inserting all data from here
 tournamentTree['columns']=("Header1", "Header2", "Header3", "Header4","Header5","Header6","Header7", "Header8")
 tournamentTree.column("#0", width=0, stretch=NO)
+# Pack tree
+tournamentTree.pack()
 
-# Place tree
-tournamentTree.place(relx=.002,rely=.609)
+# Adding vertical scrollbar - Theme cannot be changed, as its window native scrollbar. 
+vsb = Scrollbar(win, orient="vertical", command=tournamentTree.yview)
+vsb.place(relx=0.985, rely=0.645, relheight=0.352, relwidth=0.015)
+tournamentTree.configure(yscrollcommand=vsb.set)
+
 
 # Columns
 tournamentTree.column("Header1", anchor=CENTER, width=161)
@@ -257,9 +292,9 @@ tournamentTree.heading("Header6", text="Prize Pool", anchor=CENTER)
 tournamentTree.heading("Header7", text="Players", anchor=CENTER)
 tournamentTree.heading("Header8", text="Placement", anchor=CENTER)
 
-# Insert MTT data here
+# Insert MTT data here - Maybe make function, same for cash game
 tournamentTree.insert(parent="", index=0, iid=0, text="", values=("2021/10/07", "Super Satellite MTT", "No Limit Hold'em", "$0.13/$0.01 USD", "$0.00", "$15.47 USD", "90 players", "50th place"))
-tournamentTree.insert(parent="", index=1, iid=1, text="", values=("2021/10/07", "Super Satellite MTT", "No Limit Hold'em", "$0.13/$0.01 USD", "$0.00", "$15.47 USD", "90 players", "50th place"))
+tournamentTree.insert(parent="", index=1, iid=1, text="", values=("2021/10/22", "MTT 8-Max", "No Limit Hold'em", "$0.98/$0.12 USD", "$0.25", "$547.68 USD", "1141 players", "288th place"))
 tournamentTree.insert(parent='', index=2, iid=2, text='', values=("2021/10/07","Super Satellite MTT","No Limit Hold'em", "$0.13/$0.01 USD", "$0.00", "$15.47 USD", "90 players", "50th place"))
 tournamentTree.insert(parent='', index=3, iid=3, text='', values=("2021/10/07","Super Satellite MTT","No Limit Hold'em", "$0.13/$0.01 USD", "$0.00", "$15.47 USD", "90 players", "50th place"))
 tournamentTree.insert(parent='', index=4, iid=4, text='', values=("2021/10/07","Super Satellite MTT","No Limit Hold'em", "$0.13/$0.01 USD", "$0.00", "$15.47 USD", "90 players", "50th place"))
@@ -279,10 +314,15 @@ tournamentTree.insert(parent='', index=17, iid=17, text='', values=("2021/10/07"
 tournamentTree.insert(parent='', index=18, iid=18, text='', values=("2021/10/07","Super Satellite MTT","No Limit Hold'em", "$0.13/$0.01 USD", "$0.00", "$15.47 USD", "90 players", "50th place"))
 tournamentTree.insert(parent='', index=19, iid=19, text='', values=("2021/10/07","Super Satellite MTT","No Limit Hold'em", "$0.13/$0.01 USD", "$0.00", "$15.47 USD", "90 players", "50th place"))
 
-# Scroll Bar
-treeScroll = ttk.Scrollbar(win, orient="vertical",command=tournamentTree.yview)
-tournamentTree.configure(yscroll=tournamentTree.set)
-#treeScroll.grid(row=0, column=1, sticky='ns')
+
+
+
+
+# Eventually we can insert data like this:
+#for tourn in tourns:
+    #tree.insert('', tk.END, values=tourn)
+
+
 
 
 # Tkinter loop

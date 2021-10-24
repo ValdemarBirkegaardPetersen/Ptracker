@@ -2,7 +2,7 @@ from tkinter import ttk
 from tkinter import *
 
 from CenterWindow import menubar
-from treeviewFunctions import insertCashgameData,insertTourneyData, hello
+from treeviewFunctions import insertCashgameData,insertTourneyData, tourneyHeaders, cashgameHeaders
 
 import matplotlib.style
 from matplotlib.backends.backend_tkagg import (
@@ -64,12 +64,18 @@ def on_tab_selected(event):
     tab_text = event.widget.tab(selected_tab, "text")
 
     if tab_text == "Tournaments":
+        for i in tournamentTree.get_children():
+            tournamentTree.delete(i)
         print("Tournaments")
+        insertTourneyData(tournamentTree)
+        tourneyHeaders(tournamentTree)
 
     if tab_text == "Cash Games":
         for i in tournamentTree.get_children():
             tournamentTree.delete(i)
         print("Cash Games")
+        insertCashgameData(tournamentTree)
+        cashgameHeaders(tournamentTree)
 
 # Calling external menubar function
 menubar(win)
@@ -282,38 +288,15 @@ tournamentTree.column("Header8", anchor=CENTER, width=162)
 
 
 # Headings
-tournamentTree.heading("#0", text="", anchor=CENTER)
-tournamentTree.heading("Header1", text="Date", anchor=CENTER)
-tournamentTree.heading("Header2", text="Tournament Description", anchor=CENTER)
-tournamentTree.heading("Header3", text="Game")
-tournamentTree.heading("Header4", text="Buy-In", anchor=CENTER)
-tournamentTree.heading("Header5", text="Net Won", anchor=CENTER)
-tournamentTree.heading("Header6", text="Prize Pool", anchor=CENTER)
-tournamentTree.heading("Header7", text="Players", anchor=CENTER)
-tournamentTree.heading("Header8", text="Placement", anchor=CENTER)
-
-# Insert MTT data here - Maybe make function, same for cash game
-tournamentTree.insert(parent="", index=0, iid=0, text="", values=("2021/10/07", "Super Satellite MTT", "No Limit Hold'em", "$0.13/$0.01 USD", "$0.00", "$15.47 USD", "90 players", "50th place"))
-tournamentTree.insert(parent="", index=1, iid=1, text="", values=("2021/10/22", "MTT 8-Max", "No Limit Hold'em", "$0.98/$0.12 USD", "$0.25", "$547.68 USD", "1141 players", "288th place"))
-tournamentTree.insert(parent='', index=2, iid=2, text='', values=("2021/10/07","Super Satellite MTT","No Limit Hold'em", "$0.13/$0.01 USD", "$0.00", "$15.47 USD", "90 players", "50th place"))
-tournamentTree.insert(parent='', index=3, iid=3, text='', values=("2021/10/07","Super Satellite MTT","No Limit Hold'em", "$0.13/$0.01 USD", "$0.00", "$15.47 USD", "90 players", "50th place"))
-tournamentTree.insert(parent='', index=4, iid=4, text='', values=("2021/10/07","Super Satellite MTT","No Limit Hold'em", "$0.13/$0.01 USD", "$0.00", "$15.47 USD", "90 players", "50th place"))
-tournamentTree.insert(parent="", index=5, iid=5, text="", values=("2021/10/07", "Super Satellite MTT", "No Limit Hold'em", "$0.13/$0.01 USD", "$0.00", "$15.47 USD", "90 players", "50th place"))
-tournamentTree.insert(parent="", index=6, iid=6, text="", values=("2021/10/07", "Super Satellite MTT", "No Limit Hold'em", "$0.13/$0.01 USD", "$0.00", "$15.47 USD", "90 players", "50th place"))
-tournamentTree.insert(parent='', index=7, iid=7, text='', values=("2021/10/07","Super Satellite MTT","No Limit Hold'em", "$0.13/$0.01 USD", "$0.00", "$15.47 USD", "90 players", "50th place"))
-tournamentTree.insert(parent='', index=8, iid=8, text='', values=("2021/10/07","Super Satellite MTT","No Limit Hold'em", "$0.13/$0.01 USD", "$0.00", "$15.47 USD", "90 players", "50th place"))
-tournamentTree.insert(parent='', index=9, iid=9, text='', values=("2021/10/07","Super Satellite MTT","No Limit Hold'em", "$0.13/$0.01 USD", "$0.00", "$15.47 USD", "90 players", "50th place"))
-tournamentTree.insert(parent="", index=10, iid=10, text="", values=("2021/10/07", "Super Satellite MTT", "No Limit Hold'em", "$0.13/$0.01 USD", "$0.00", "$15.47 USD", "90 players", "50th place"))
-tournamentTree.insert(parent="", index=11, iid=11, text="", values=("2021/10/07", "Super Satellite MTT", "No Limit Hold'em", "$0.13/$0.01 USD", "$0.00", "$15.47 USD", "90 players", "50th place"))
-tournamentTree.insert(parent='', index=12, iid=12, text='', values=("2021/10/07","Super Satellite MTT","No Limit Hold'em", "$0.13/$0.01 USD", "$0.00", "$15.47 USD", "90 players", "50th place"))
-tournamentTree.insert(parent='', index=13, iid=13, text='', values=("2021/10/07","Super Satellite MTT","No Limit Hold'em", "$0.13/$0.01 USD", "$0.00", "$15.47 USD", "90 players", "50th place"))
-tournamentTree.insert(parent='', index=14, iid=14, text='', values=("2021/10/07","Super Satellite MTT","No Limit Hold'em", "$0.13/$0.01 USD", "$0.00", "$15.47 USD", "90 players", "50th place"))
-tournamentTree.insert(parent="", index=15, iid=15, text="", values=("2021/10/07", "Super Satellite MTT", "No Limit Hold'em", "$0.13/$0.01 USD", "$0.00", "$15.47 USD", "90 players", "50th place"))
-tournamentTree.insert(parent="", index=16, iid=16, text="", values=("2021/10/07", "Super Satellite MTT", "No Limit Hold'em", "$0.13/$0.01 USD", "$0.00", "$15.47 USD", "90 players", "50th place"))
-tournamentTree.insert(parent='', index=17, iid=17, text='', values=("2021/10/07","Super Satellite MTT","No Limit Hold'em", "$0.13/$0.01 USD", "$0.00", "$15.47 USD", "90 players", "50th place"))
-tournamentTree.insert(parent='', index=18, iid=18, text='', values=("2021/10/07","Super Satellite MTT","No Limit Hold'em", "$0.13/$0.01 USD", "$0.00", "$15.47 USD", "90 players", "50th place"))
-tournamentTree.insert(parent='', index=19, iid=19, text='', values=("2021/10/07","Super Satellite MTT","No Limit Hold'em", "$0.13/$0.01 USD", "$0.00", "$15.47 USD", "90 players", "50th place"))
-
+#tournamentTree.heading("#0", text="", anchor=CENTER)
+#tournamentTree.heading("Header1", text="Date", anchor=CENTER)
+#tournamentTree.heading("Header2", text="Tournament Description", anchor=CENTER)
+#tournamentTree.heading("Header3", text="Game")
+#tournamentTree.heading("Header4", text="Buy-In", anchor=CENTER)
+#tournamentTree.heading("Header5", text="Net Won", anchor=CENTER)
+#tournamentTree.heading("Header6", text="Prize Pool", anchor=CENTER)
+#tournamentTree.heading("Header7", text="Players", anchor=CENTER)
+#tournamentTree.heading("Header8", text="Placement", anchor=CENTER)
 
 
 

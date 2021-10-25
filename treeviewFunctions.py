@@ -1,3 +1,5 @@
+from tkinter import filedialog
+
 def insertTourneyData (treeview):
 	treeview.insert(parent="", index=0, iid=0, text="", values=("2021/10/07", "Super Satellite MTT", "No Limit Hold'em", "$0.13/$0.01 USD", "$0.00", "$15.47 USD", "90 players", "50th place"))
 	treeview.insert(parent="", index=1, iid=1, text="", values=("2021/10/22", "MTT 8-Max", "No Limit Hold'em", "$0.98/$0.12 USD", "$0.25", "$547.68 USD", "1141 players", "288th place"))
@@ -71,5 +73,3 @@ def removeEntries (treeview):
 def handleTabChanged(event):
 	removeEntries(treeview)
 
-def hello():
-	print("hello")

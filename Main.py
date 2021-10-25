@@ -1,16 +1,14 @@
 from tkinter import ttk
 from tkinter import *
+import tkinter as tk
+from tkinter import filedialog
 
-from CenterWindow import menubar
 from treeviewFunctions import insertCashgameData,insertTourneyData, tourneyHeaders, cashgameHeaders
 
 import matplotlib.style
 from matplotlib.backends.backend_tkagg import (
     FigureCanvasTkAgg)
 from matplotlib.figure import Figure
-
-
-
 
 
 # Random values for displaying. Ignore
@@ -28,7 +26,11 @@ AGG_PCT_amount = 3
 CBET_amount = 2
 CBET_Fold_amount = 3
 
-print("here")
+# Variables for window size and screen size
+windowWidth = 1300
+windowHeight = 800
+nw_width = 450
+nw_height = 600
 
 # Defining the window and size
 win = Tk()
@@ -42,9 +44,7 @@ s.theme_use("clam")
 
 # Window is not resizable
 win.resizable(False, False)
-# Variables for window size and screen size
-windowWidth = 1300
-windowHeight = 800
+
 screenWidth = win.winfo_screenwidth()
 screenHeight = win.winfo_screenheight()
 
@@ -55,6 +55,51 @@ y_cordinate = int((screenHeight / 2) - (windowHeight / 2))
 # Centering the window with the variables above
 win.geometry("{}x{}+{}+{}".format(windowWidth, windowHeight, x_cordinate, y_cordinate))
 
+# Function that opens the configure window - Everything regarding that, is contained in here 
+def openWindow():
+    newWindow = Toplevel(win)
+    newWindow.title("Configure")
+    newWindow.resizable(False, False)
+    nw_x_cordinate = int((screenWidth / 2) - (nw_width / 2))
+    nw_y_cordinate = int((screenHeight/ 2) - (nw_height / 2))
+    newWindow.geometry("{}x{}+{}+{}".format(450, 600, nw_x_cordinate, nw_y_cordinate)) # Centering
+
+    # Function for opening file browser
+    def fileOpener(textfield):
+        # Storing file in variable, and changing to string
+        f_input = filedialog.askopenfile(initialdir="/")
+        f_input_str = str(f_input)
+
+        # String manipulation in order to only get the path
+        f_start = f_input_str.find("name") + 6 # 6 is the number of characters from where "name" starts, which is the first ' encapsling the path
+        f_input_str = f_input_str[f_start:-1]
+        f_finish = f_input_str.find("'")
+        f_output = f_input_str[0:f_finish]
+
+        textfield.insert(tk.END, f_output)
+        textfield.configure(font=("MoolBoran", 9))
+
+    # Hand History File Explorer 
+    Label(newWindow, text="PokerStars Hand History Location").grid(row=0,column=0, sticky=NW, padx=2)
+    hh_text = Text(newWindow, height=1, width=45, xscrollcommand=True)
+    hh_text.grid(row=1,column=0,sticky=NW, padx=4)
+
+    hh_button = Button(newWindow, height=1, text="Browse Files", command = lambda:fileOpener(hh_text))
+    hh_button.grid(row=1,column=1)
+
+    # Tourn Summary File Explorer 
+    ## Hand History File Explorer Label(newWindow, text="PokerStars TournSummary Location").pack(side="left", anchor=N, padx=3, pady=200)
+
+# Menubar
+mb = Menu(win)
+menu_bar = Menu(mb, tearoff=0)
+menu_bar.add_command(label="Configure", command=openWindow)
+menu_bar.add_separator()  
+menu_bar.add_command(label="Exit", command=win.quit)  
+
+# Add headers/cascades to menubar 
+mb.add_cascade(label="File", menu=menu_bar)
+win.config(menu=mb)
 
 # Declaring and binding events to the selected tab
 tournamentTree = ttk.Treeview(win, show="headings",height=19) #Height should be equal number of MTT's
@@ -66,19 +111,14 @@ def on_tab_selected(event):
     if tab_text == "Tournaments":
         for i in tournamentTree.get_children():
             tournamentTree.delete(i)
-        print("Tournaments")
         insertTourneyData(tournamentTree)
         tourneyHeaders(tournamentTree)
 
     if tab_text == "Cash Games":
         for i in tournamentTree.get_children():
             tournamentTree.delete(i)
-        print("Cash Games")
         insertCashgameData(tournamentTree)
         cashgameHeaders(tournamentTree)
-
-# Calling external menubar function
-menubar(win)
 
 # Creating the tab control and the tabs we need
 tabControl = ttk.Notebook(win)
@@ -251,7 +291,7 @@ CBET_Fold_Canvas.place(relx=.857, rely=.86)
 # ----------------------------------------Hands Won------------------------------------------------------------
 
 
-ttk.Label(frame2, text="PokerStars HandHistory Location:", font=("MoolBoran", 11, "bold")).place(relx=0.01,rely=0.01)
+ttk.Label(frame2, text="Recent Hand History", font=("MoolBoran", 11, "bold")).place(relx=0.01,rely=0.01)
 
 
 

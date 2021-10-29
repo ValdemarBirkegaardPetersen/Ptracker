@@ -81,7 +81,7 @@ def openWindow():
 
     # Hand History File Explorer 
     Label(newWindow, text="PokerStars Hand History Location").grid(row=0,column=0, sticky=NW, padx=2)
-    hh_text = Text(newWindow, height=1, width=45, xscrollcommand=True)
+    hh_text = Text(newWindow, height=1, width=45,wrap=NONE)
     hh_text.grid(row=1,column=0,sticky=NW, padx=4)
 
     hh_button = Button(newWindow, height=1, text="Browse Files", command = lambda:fileOpener(hh_text))

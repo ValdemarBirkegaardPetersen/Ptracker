@@ -67,28 +67,27 @@ def openWindow():
     # Function for opening file browser
     def fileOpener(textfield):
         # Storing file in variable, and changing to string
-        f_input = filedialog.askopenfile(initialdir="/")
+        f_input = filedialog.askdirectory(initialdir="/")
         f_input_str = str(f_input)
 
-        # String manipulation in order to only get the path
-        f_start = f_input_str.find("name") + 6 # 6 is the number of characters from where "name" starts, which is the first ' encapsling the path
-        f_input_str = f_input_str[f_start:-1]
-        f_finish = f_input_str.find("'")
-        f_output = f_input_str[0:f_finish]
-
-        textfield.insert(tk.END, f_output)
-        textfield.configure(font=("MoolBoran", 9))
+        textfield.insert(tk.END, f_input_str)
+        textfield.configure(font=("MoolBoran", 11))
 
     # Hand History File Explorer 
     Label(newWindow, text="PokerStars Hand History Location").grid(row=0,column=0, sticky=NW, padx=2)
-    hh_text = Text(newWindow, height=1, width=45,wrap=NONE)
+    hh_text = Text(newWindow, height=2, width=43,wrap=NONE)
     hh_text.grid(row=1,column=0,sticky=NW, padx=4)
 
-    hh_button = Button(newWindow, height=1, text="Browse Files", command = lambda:fileOpener(hh_text))
+    hh_button = Button(newWindow, height=1, text="Browse Files", font=("MoolBoran",10), command = lambda:fileOpener(hh_text))
     hh_button.grid(row=1,column=1)
 
     # Tourn Summary File Explorer 
-    ## Hand History File Explorer Label(newWindow, text="PokerStars TournSummary Location").pack(side="left", anchor=N, padx=3, pady=200)
+    Label(newWindow, text="PokerStars Tourn Summary Location").grid(row=2,column=0,sticky=NW,padx=2)
+    ts_text = Text(newWindow, height=2, width=43, wrap=NONE)
+    ts_text.grid(row=3,column=0,sticky=NW,padx=4)
+
+    ts_button = Button(newWindow, height=2, text="Browse Files", font=("MoolBoran",10), command = lambda:fileOpener(ts_text))
+    ts_button.grid(row=3,column=1)
 
 # Menubar
 mb = Menu(win)

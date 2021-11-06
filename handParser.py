@@ -4,8 +4,8 @@ import os
 # Paths
 #tourn_path = "C:/Users/Vla/Desktop/MTT"
 #history_path = "C:/Users/Vla/Desktop/Cash Game"
-tourn_path = "C:/Users/Deida/AppData/Local/PokerStars.DK/TournSummary/"
-history_path = "C:/Users/Deida/AppData/Local/PokerStars.DK/HandHistory/"
+tourn_path = "C:/Users/Deida/AppData/Local/PokerStars.DK/TournSummary/Valdemar1743"
+history_path = "C:/Users/Deida/AppData/Local/PokerStars.DK/HandHistory/Valdemar1743"
 
 tourn_files = []
 history_files = []
@@ -21,7 +21,7 @@ for root, dirs, files in os.walk(history_path, topdown=False):
         history_files.append(os.path.join(root, name))
 
 # Getting raw content and then using strip to remove extra space        
-with open(tourn_files[10]) as raw_file:
+with open(tourn_files[14]) as raw_file:
     raw_content = raw_file.readlines()
     content = [x.strip() for x in raw_content]
 
@@ -75,13 +75,13 @@ tourn_buyin_0 = stringCotainer_str[store_buyin:store_buyin+letstry] # Making new
 
 
 # Get net won. Might have to check hand histories for this
-""" Probably need to match the tournament id with the files names in handhistory folder. Open the identical one, and get total won at the end of .txt document"""
 
-tourn_netwon = 0
-for i in history_files:
+# Match tournament id in both folders tournsummary and handhistory
+for i in history_files: 
     if tourn_id_0 in i:
         identical_tourn = i
 
+# Open the identical tournament as a raw file and parse the document into variables that is stripped off useless characters
 with open(identical_tourn) as raw_file:
     raw_hand_content = raw_file.readlines()
     hand_content = [x.strip() for x in raw_hand_content]
@@ -94,15 +94,16 @@ for i in aliasContainer:
         tourn_alias = tourn_alias[9:tourn_alias.find("[")-1]
         break
 
-# There is several ways the txt logs store how much you won. If you havent won it will say "Valdemar1743 finished the tournament in blabla place"
-# If you win, it can say "Valdemar1743 wins the tournament and receives $0.50 - congratulations!"
+"""There is several ways the txt logs store how much you won. If you havent won it will say "Valdemar1743 finished the tournament in blabla place"
+If you win, it can say "Valdemar1743 wins the tournament and receives $0.50 - congratulations!"
+If you win money but is not 1st place you get something like "Valdemar1743 finished the tournament in 5th place and received $1.58."""
 
-last_section = hand_content[-40:-1]
 
+last_section = hand_content[-40:-1] # Take the last section of file
 
-start_netwon = 0
-end_netwon = 0
-tourn_won = ""
+start_netwon = 0 # For handparsing
+end_netwon = 0 # For handparsing
+tourn_won = "$0.00"
 won_something = ""
 # Check if something was won
 for i in last_section:
@@ -118,14 +119,11 @@ for i in last_section:
                 end_netwon = numeric_counter
                 tourn_won = won_something[start_netwon:end_netwon]
                 break
-    else: # I can probably delete this else statement, since if there is no "receives" string, then nothing is won at all. Wait and see 
-        if tourn_alias in i and "finished the tournament" in i:
-            tourn_won = "$0.00"
+    elif tourn_alias in i and "received" in i:
+        tourn_won = i[i.find("$"):-1]
+        break
 
 
-
-
-print(tourn_won)
 
 
 
@@ -154,7 +152,7 @@ place_word_start = holder.find("place")
 tourn_placement_0 = holder[16:place_word_start+5]
 
 
-"""print(tourn_id_0)
+print(tourn_id_0)
 print(tourn_date_0)
 print(tourn_description_0)
 print(tourn_type_0)
@@ -162,11 +160,11 @@ print(tourn_buyin_0)
 
 print(tourn_prizepool_0)
 print(tourn_player_count_0)
-print(tourn_placement_0)"""
-
+print(tourn_placement_0)
+print(tourn_won)
 
 
 # Other variables
-#print(tourn_alias)
-#print(tourn_won)
+print(tourn_alias)
+print(tourn_won)
 

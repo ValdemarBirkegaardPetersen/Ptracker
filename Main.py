@@ -4,11 +4,12 @@ import tkinter as tk
 from tkinter import filedialog
 
 from treeviewFunctions import insertCashgameData,insertTourneyData, tourneyHeaders, cashgameHeaders
-
+from handParser import get_tourn_filenames, get_hist_filenames, get_content, get_first_bit, get_tourn_id, get_tourn_type, get_tourn_date, get_tourn_buyin, match_id, get_handhistory_content, get_alias, how_much_won, get_prizepool, get_players, checkForKnockout, get_tourn_description, get_placement 
 import matplotlib.style
 from matplotlib.backends.backend_tkagg import (
     FigureCanvasTkAgg)
 from matplotlib.figure import Figure
+import os
 
 
 # Random values for displaying. Ignore
@@ -55,50 +56,8 @@ y_cordinate = int((screenHeight / 2) - (windowHeight / 2))
 # Centering the window with the variables above
 win.geometry("{}x{}+{}+{}".format(windowWidth, windowHeight, x_cordinate, y_cordinate))
 
-# Function that opens the configure window - Everything regarding that, is contained in here 
-def openWindow():
-    newWindow = Toplevel(win)
-    newWindow.title("Configure")
-    newWindow.resizable(False, False)
-    nw_x_cordinate = int((screenWidth / 2) - (nw_width / 2))
-    nw_y_cordinate = int((screenHeight/ 2) - (nw_height / 2))
-    newWindow.geometry("{}x{}+{}+{}".format(450, 600, nw_x_cordinate, nw_y_cordinate)) # Centering
 
-    # Function for opening file browser
-    def fileOpener(textfield):
-        # Storing file in variable, and changing to string
-        f_input = filedialog.askdirectory(initialdir="/")
-        f_input_str = str(f_input)
 
-        textfield.insert(tk.END, f_input_str)
-        textfield.configure(font=("MoolBoran", 11))
-
-    # Hand History File Explorer 
-    Label(newWindow, text="PokerStars Hand History Location").grid(row=0,column=0, sticky=NW, padx=2)
-    hh_text = Text(newWindow, height=2, width=43,wrap=NONE)
-    hh_text.grid(row=1,column=0,sticky=NW, padx=4)
-
-    hh_button = Button(newWindow, height=1, text="Browse Files", font=("MoolBoran",10), command = lambda:fileOpener(hh_text))
-    hh_button.grid(row=1,column=1)
-
-    # Tourn Summary File Explorer 
-    Label(newWindow, text="PokerStars Tourn Summary Location").grid(row=2,column=0,sticky=NW,padx=2)
-    ts_text = Text(newWindow, height=2, width=43, wrap=NONE)
-    ts_text.grid(row=3,column=0,sticky=NW,padx=4)
-
-    ts_button = Button(newWindow, height=2, text="Browse Files", font=("MoolBoran",10), command = lambda:fileOpener(ts_text))
-    ts_button.grid(row=3,column=1)
-
-# Menubar
-mb = Menu(win)
-menu_bar = Menu(mb, tearoff=0)
-menu_bar.add_command(label="Configure", command=openWindow)
-menu_bar.add_separator()  
-menu_bar.add_command(label="Exit", command=win.quit)  
-
-# Add headers/cascades to menubar 
-mb.add_cascade(label="File", menu=menu_bar)
-win.config(menu=mb)
 
 # Declaring and binding events to the selected tab
 tournamentTree = ttk.Treeview(win, show="headings",height=19) #Height should be equal number of MTT's
@@ -110,13 +69,13 @@ def on_tab_selected(event):
     if tab_text == "Tournaments":
         for i in tournamentTree.get_children():
             tournamentTree.delete(i)
-        insertTourneyData(tournamentTree)
+        #insertTourneyData(tournamentTree)
         tourneyHeaders(tournamentTree)
 
     if tab_text == "Cash Games":
         for i in tournamentTree.get_children():
             tournamentTree.delete(i)
-        insertCashgameData(tournamentTree)
+        #insertCashgameData(tournamentTree)
         cashgameHeaders(tournamentTree)
 
 # Creating the tab control and the tabs we need
@@ -182,11 +141,6 @@ statsCanvas = Canvas(frame1, width=700, height=100, bg="#dcdad5", highlightthick
 
 # Key stats section - Label first
 ttk.Label(frame1, text="Key Stats", font=("MoolBoran", 11, "bold")).place(relx=.43, rely=0.82,)
-
-
-
-
-
 
 
 # ----------------------------------------Total Hands-----------------------------------------------------------
@@ -340,11 +294,154 @@ tournamentTree.column("Header8", anchor=CENTER, width=162)
 
 
 
-# Eventually we can insert data like this:
-#for tourn in tourns:
+# Function that opens the configure window - Everything regarding that, is contained in here 
+def openWindow():
+    win.withdraw()  
+    newWindow = Toplevel(win)
+    newWindow.title("Configure")
+    newWindow.resizable(False, False)
+    nw_x_cordinate = int((screenWidth / 2) - (nw_width / 2))
+    nw_y_cordinate = int((screenHeight/ 2) - (nw_height / 2))
+    newWindow.geometry("{}x{}+{}+{}".format(450, 187, nw_x_cordinate, nw_y_cordinate)) # Centering
+
+    count = 0
+
+    # Hand History File Explorer 
+    Label(newWindow, text="PokerStars Hand History Location").grid(row=0,column=0, sticky=NW, padx=2,pady=5)
+    hh_text = Text(newWindow, height=2, width=43,wrap=NONE)
+    hh_text.grid(row=1,column=0,sticky=NW, padx=4)
+
+    hh_button = Button(newWindow, height=1, text="Browse Files", font=("MoolBoran",10), command = lambda:fileOpener(hh_text,count))
+    hh_button.grid(row=1,column=1,sticky=NS)
+
+    # Tourn Summary File Explorer 
+    Label(newWindow, text="PokerStars Tourn Summary Location").grid(row=2,column=0,sticky=NW,padx=2,pady=5)
+    ts_text = Text(newWindow, height=2, width=43, wrap=NONE)
+    ts_text.grid(row=3,column=0,sticky=NW,padx=4)
+
+    ts_button = Button(newWindow, height=1, text="Browse Files", font=("MoolBoran",10), command = lambda:fileOpener(ts_text,count))
+    ts_button.grid(row=3,column=1,sticky=NS)
+
+    import_button = Button(newWindow,height=1, text="Import Hand History", font=("MoolBoran",10), 
+        command=lambda:import_data(hh_text,ts_text,newWindow,tournamentTree))
+    import_button.place(anchor=N,x=216, y=145)
+
+
+
+# Function for opening file browser
+def fileOpener(textfield,c):
+    new_counter = 0
+    # Storing file in variable, and changing to string
+    f_input = filedialog.askdirectory(initialdir="/")
+    f_input_str = str(f_input)
+
+    textfield.insert(tk.END, f_input_str)
+    textfield.configure(font=("MoolBoran", 11))
+    c += 1  
+
+def import_data(hh_textfield, ts_textfield,current_window,treeview):
+    win.deiconify() # Closing the main window (win) so that import/configure window will stay top level until use is over
+ 
+    hh_path = hh_textfield.get("1.0",END)   # Taking path from hand_hist textfield
+    ts_path = ts_textfield.get("1.0",END)   # Taking path fram tourn_hist textfield
+
+    # Using function to save a list of all the file names in a directory and saving the length of this list
+    tourn_file_names = get_tourn_filenames(ts_textfield.get("1.0",END).strip())
+    tourn_length = len(tourn_file_names)
+    # Using function to save a list of all the file names in a directory and saving the length of this list
+    hist_file_names = get_hist_filenames(hh_textfield.get("1.0",END).strip())
+    hist_length = len(hist_file_names)
+
+    # Saving the contents of each filename in a content list/array
+    tourn_content_arr = get_content(tourn_file_names, tourn_length)
+
+    # Stringcontainer list. Stringcontainer stores the first 10-11 lines of each tourn_summary file
+    stringContainer_arr = []
+    for x in range(tourn_length):
+        stringContainer_arr.append(get_first_bit(tourn_content_arr[x]))
+
+    # Getting list of tournament id's
+    tourn_id_list = []
+    for x in range(tourn_length):
+        tourn_id_list.append(get_tourn_id(stringContainer_arr[x]))
+
+    # Getting list of tournament types
+    tourn_type_list = []
+    for x in range(tourn_length):
+        tourn_type_list.append(get_tourn_type(stringContainer_arr[x]))
+
+    # Getting list of tournament dates
+    tourn_date_list = []
+    for x in range(tourn_length):
+        tourn_date_list.append(get_tourn_date(stringContainer_arr[x]))
+
+    # Getting list of tournament dates
+    tourn_buyin_list = []
+    for x in range(tourn_length):
+        tourn_buyin_list.append(get_tourn_buyin(stringContainer_arr[x]))
+
+
+    # Get net won. This is a longer process     
+    matching_id_list = []
+    for x in range(tourn_length):
+        matching_id_list.append(match_id(tourn_id_list[x], hist_file_names))
+
+    hand_hist_content = []
+    for x in range(tourn_length):
+        hand_hist_content.append(get_handhistory_content(matching_id_list[x]))
+
+    alias_list = []
+    for x in range(tourn_length):
+        alias_list.append(get_alias(hand_hist_content[x]))
+
+    how_much_won_list = []
+    for x in range(tourn_length):
+        how_much_won_list.append(how_much_won(hand_hist_content[x]))
+
+    # Get prizepool
+    prizepool_list = []
+    for x in range(tourn_length):
+        prizepool_list.append(get_prizepool(stringContainer_arr[x]))
+
+    # Get players
+    players_list = []
+    for x in range(tourn_length):
+        players_list.append(get_players(stringContainer_arr[x]))
+
+    # Get tournament description
+    tourn_desc_list = []
+    for x in range(tourn_length):
+        tourn_desc_list.append(get_tourn_description(stringContainer_arr[x], players_list[x],hand_hist_content[x]))
+
+    # Get placement
+    tourn_placement_list = []
+    for x in range(tourn_length):
+        tourn_placement_list.append(get_placement(tourn_content_arr[x],alias_list[x]))
+
+    for x in range(tourn_length):
+        treeview.insert(parent="", index=x, iid=x, text="", values=(tourn_date_list[x],tourn_desc_list[x],tourn_type_list[x],tourn_buyin_list[x],how_much_won_list[x],prizepool_list[x],players_list[x],tourn_placement_list[x]))
+ 
+
+
+    # Close the import/configure window after clicking on 'import'
+    current_window.destroy()
+
+
+
+    # Eventually we can insert data like this:
+    #for tourn in tourns:
     #tree.insert('', tk.END, values=tourn)
 
+# Menubar
+mb = Menu(win)
+menu_bar = Menu(mb, tearoff=0)
+menu_bar.add_command(label="Configure", command=openWindow)
+menu_bar.add_separator()  
+menu_bar.add_command(label="Exit", command=win.quit)  
 
+# Add headers/cascades to menubar 
+mb.add_cascade(label="File", menu=menu_bar)
+win.config(menu=mb)
 
 
 # Tkinter loop

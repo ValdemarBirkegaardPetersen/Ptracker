@@ -1,8 +1,8 @@
 from tkinter import filedialog
 
 def insertTourneyData (treeview):
-	treeview.insert(parent="", index=0, iid=0, text="", values=("2021/10/07", "Super Satellite MTT", "No Limit Hold'em", "$0.13/$0.01 USD", "$0.00", "$15.47 USD", "90 players", "50th place"))
-	treeview.insert(parent="", index=1, iid=1, text="", values=("2021/10/22", "MTT 8-Max", "No Limit Hold'em", "$0.98/$0.12 USD", "$0.25", "$547.68 USD", "1141 players", "288th place"))
+	treeview.insert(parent="", index=0, iid=0, text="", values=("NIGGER/10/22", "Super Satellite MTT", "No Limit Hold'em", "$0.13/$0.01 USD", "$0.00", "$15.47 USD", "90 players", "50th place"))
+	"""treeview.insert(parent="", index=1, iid=1, text="", values=("2021/10/22", "MTT 8-Max", "No Limit Hold'em", "$0.98/$0.12 USD", "$0.25", "$547.68 USD", "1141 players", "288th place"))
 	treeview.insert(parent='', index=2, iid=2, text='', values=("2021/10/07","Super Satellite MTT","No Limit Hold'em", "$0.13/$0.01 USD", "$0.00", "$15.47 USD", "90 players", "50th place"))
 	treeview.insert(parent='', index=3, iid=3, text='', values=("2021/10/07","Super Satellite MTT","No Limit Hold'em", "$0.13/$0.01 USD", "$0.00", "$15.47 USD", "90 players", "50th place"))
 	treeview.insert(parent='', index=4, iid=4, text='', values=("2021/10/07","Super Satellite MTT","No Limit Hold'em", "$0.13/$0.01 USD", "$0.00", "$15.47 USD", "90 players", "50th place"))
@@ -20,7 +20,7 @@ def insertTourneyData (treeview):
 	treeview.insert(parent="", index=16, iid=16, text="", values=("2021/10/07", "Super Satellite MTT", "No Limit Hold'em", "$0.13/$0.01 USD", "$0.00", "$15.47 USD", "90 players", "50th place"))
 	treeview.insert(parent='', index=17, iid=17, text='', values=("2021/10/07","Super Satellite MTT","No Limit Hold'em", "$0.13/$0.01 USD", "$0.00", "$15.47 USD", "90 players", "50th place"))
 	treeview.insert(parent='', index=18, iid=18, text='', values=("2021/10/07","Super Satellite MTT","No Limit Hold'em", "$0.13/$0.01 USD", "$0.00", "$15.47 USD", "90 players", "50th place"))
-	treeview.insert(parent='', index=19, iid=19, text='', values=("2021/10/07","Super Satellite MTT","No Limit Hold'em", "$0.13/$0.01 USD", "$0.00", "$15.47 USD", "90 players", "50th place"))
+	treeview.insert(parent='', index=19, iid=19, text='', values=("2021/10/07","Super Satellite MTT","No Limit Hold'em", "$0.13/$0.01 USD", "$0.00", "$15.47 USD", "90 players", "50th place"))"""
 
 def tourneyHeaders(treeview):
 	treeview.heading("#0", text="")
@@ -46,7 +46,7 @@ def cashgameHeaders(treeview):
 
 def insertCashgameData (treeview):
 	treeview.insert(parent="", index=0, iid=0, text="", values=("Halley", "Super Satellite MTT", "No Limit Hold'em", "$0.13/$0.01 USD", "$0.00", "$15.47 USD", "90 players", "50th place"))
-	treeview.insert(parent="", index=1, iid=1, text="", values=("2021/10/22", "MTT 8-Max", "No Limit Hold'em", "$0.98/$0.12 USD", "$0.25", "$547.68 USD", "1141 players", "288th place"))
+"""	treeview.insert(parent="", index=1, iid=1, text="", values=("2021/10/22", "MTT 8-Max", "No Limit Hold'em", "$0.98/$0.12 USD", "$0.25", "$547.68 USD", "1141 players", "288th place"))
 	treeview.insert(parent='', index=2, iid=2, text='', values=("2021/10/07","Super Satellite MTT","No Limit Hold'em", "$0.13/$0.01 USD", "$0.00", "$15.47 USD", "90 players", "50th place"))
 	treeview.insert(parent='', index=3, iid=3, text='', values=("2021/10/07","Super Satellite MTT","No Limit Hold'em", "$0.13/$0.01 USD", "$0.00", "$15.47 USD", "90 players", "50th place"))
 	treeview.insert(parent='', index=4, iid=4, text='', values=("2021/10/07","Super Satellite MTT","No Limit Hold'em", "$0.13/$0.01 USD", "$0.00", "$15.47 USD", "90 players", "50th place"))
@@ -64,7 +64,7 @@ def insertCashgameData (treeview):
 	treeview.insert(parent="", index=16, iid=16, text="", values=("2021/10/07", "Super Satellite MTT", "No Limit Hold'em", "$0.13/$0.01 USD", "$0.00", "$15.47 USD", "90 players", "50th place"))
 	treeview.insert(parent='', index=17, iid=17, text='', values=("2021/10/07","Super Satellite MTT","No Limit Hold'em", "$0.13/$0.01 USD", "$0.00", "$15.47 USD", "90 players", "50th place"))
 	treeview.insert(parent='', index=18, iid=18, text='', values=("2021/10/07","Super Satellite MTT","No Limit Hold'em", "$0.13/$0.01 USD", "$0.00", "$15.47 USD", "90 players", "50th place"))
-	treeview.insert(parent='', index=19, iid=19, text='', values=("2021/10/07","Super Satellite MTT","No Limit Hold'em", "$0.13/$0.01 USD", "$0.00", "$15.47 USD", "90 players", "50th place"))
+	treeview.insert(parent='', index=19, iid=19, text='', values=("2021/10/07","Super Satellite MTT","No Limit Hold'em", "$0.13/$0.01 USD", "$0.00", "$15.47 USD", "90 players", "50th place"))"""
 
 def removeEntries (treeview):
 	for i in treeview.get_children():
